@@ -1,4 +1,6 @@
 /* QUESTION ARRAY: (questions provided by courses.bootcampspot.com)*/
+var startQuizBtn = document.querySelector()
+
 const questionArr = [
     {
         text: 'Commonly used data types DO NOT include:',

@@ -12,22 +12,34 @@
 <body>
     <header class ="header">
         <!-- Link to View High Scores page-->
-        <p><a href="../code-quiz/highscore.html">View High Scores</a></p>
+        <p class="high-score"><a href="../code-quiz/highscore.html">View High Scores</a></p>
         <p id="timer">Time: </p>
     </header>
     <main>
-        <section class ="code-quiz-wrapper">
-            <h1 class ="quiz-title">Coding Quiz Challenge</h1>
+        <section class = "intro-section">
+            <h1 class = "quiz-title">Coding Quiz Challenge</h1>
             <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
             <button class ="btn" id ="start-quiz">Start Quiz</button>
         </section>
+        <section class = "question-section display">
+            <h1 id = "text">Commonly used data types DO NOT include:</h1>
+            <ul id = "questions">
+                <li><button id = "a">1. strings</button></li>
+                <li><button id = "b">2. booleans</button></li>
+                <li><button id = "c">3. alerts</button></li>
+                <li><button id = "d">4. numbers</button></li>
+            </ul>
+            <p id = "border">______________________</p>
+            <p id = "answers">Correct!</p>
+        </section>
+        <section class ="high-score-section display">
+            <h1 id = "all-done">All done!</h1>
+            <p id = "final-score">Your final score is (number)</p>
+            <label for = "initials">Enter initials:</label>
+            <input type = "text" id = "initials">
+            <button id = "submit">Submit</button>
+        </section>
     </main>
-    <footer>
-        <!-- Area where 'Correct!' or 'Wrong!' is displayed -->
-        <div class ="answer-div">
-        </div>
-    </footer>
-
     <!-- Link to JavaScript -->
     <script src="./assets/js/script.js"></script>
 </body>
