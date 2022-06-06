@@ -1,6 +1,22 @@
-/* QUESTION ARRAY: (questions provided by courses.bootcampspot.com)*/
-var startQuizBtn = document.querySelector()
+/* GLOBAL VARIABLES */
+var textEl = document.querySelector("#text");
+var timerEl = document.querySelector("#timer");
+var questionsEl = document.querySelector("#questions");
+var countdownTimer
+var questionCount = 0;
+/* GV: BUTTONS */
+var startButtonEl = document.querySelector("#start-quiz");
+var aButtonEl = document.querySelector("#a");
+var bButtonEl = document.querySelector("#b");
+var cButtonEl = document.querySelector("#c");
+var dButtonEl = document.querySelector("#d");
+var submitButtonEl = document.querySelector("#submit");
+/* GV: SECTIONS */
+var introSection = document.querySelector(".intro-section")
+var questionSection = document.querySelector(".question-section");
+var highscoreSection = document.querySelector(".high-score-section");
 
+/* QUESTION ARRAY: (questions provided by courses.bootcampspot.com)*/
 const questionArr = [
     {
         text: 'Commonly used data types DO NOT include:',
@@ -8,7 +24,7 @@ const questionArr = [
         b: '2. booleans',
         c: '3. alerts',
         d: '4. numbers',
-        answer: 'c'
+        answer: '3. alerts'
     },
     {
         text: 'The condition in an if/else statement is enclosed with ____.',
@@ -16,7 +32,7 @@ const questionArr = [
         b: '2. curly braces',
         c: '3. parenthesis',
         d: '4. square brackets',
-        answer: 'b'
+        answer: '2. curly braces'
     },
     {
         text: 'Arrays in JavaScript can be used to store ____.',
@@ -24,7 +40,7 @@ const questionArr = [
         b: '2. other arrays',
         c: '3. booleans',
         d: '4. all of the above',
-        answer: 'd'
+        answer: '4. all of the above'
     },
     {
         text: 'String values must be enclosed within ____ when being assigned to variables.',
@@ -32,7 +48,7 @@ const questionArr = [
         b: '2. curly braces',
         c: '3. quotes',
         d: '4. parentheses',
-        answer: 'c'
+        answer: '3. quotes'
     },
     {
         text: 'A very useful tool used during development and debugging for printing content to the debugger is:',
@@ -40,7 +56,7 @@ const questionArr = [
         b: '2. terminal/bash',
         c: '3. for loops',
         d: '4. console log',
-        answer: 'd'
+        answer: '4. console log'
     },
 ]
 
@@ -48,16 +64,19 @@ const questionArr = [
 // Create a timer that counts down, starting at 75 seconds
 // Starter code from: https://stackoverflow.com/questions/31106189/create-a-simple-10-second-countdown
 var timeLeft = 75;
-var countdownTimer = setInterval(function(){
-  if(timeLeft <= 0){
-    clearInterval(countdownTimer);
-    document.getElementById("timer").innerHTML = "Finished";
-  } else {
-    document.getElementById("timer").innerHTML = "Time: " + timeLeft;
-  }
-  timeLeft -= 1;
-}, 1000);
 
+
+var countdown = function() {
+    countdownTimer = setInterval(function(){
+        if(timeLeft <= 0){
+          clearInterval(countdownTimer);
+          document.getElementById("timer").innerHTML = "Finished";
+        } else {
+          document.getElementById("timer").innerHTML = "Time: " + timeLeft;
+        }
+        timeLeft -= 1;
+      }, 1000);
+}
 // Time needs to start once the 'Start Quiz' button is pushed
 
 // For every correct answer, timer stays the same
@@ -67,24 +86,62 @@ var countdownTimer = setInterval(function(){
     // timeLeft is the score
 
 /* QUIZ SECTION */
+// display next question
+var displayNextQuestion = function() {
+    var question = document.createElement('div');
+
+    // when user selects correct answer, 'Correct!' is displayed at the bottom of screen
+    
+    // when user selects incorrect answer, 'Wrong!' is displayed at the bottom of screen
+
+    // hide question section and display high score section
+    
+    // when all the questions are answered before time runs out, stop the clock and display 'All done!'
+    // if questions are answered incorrectly and timer runs out, display 'All done!'
+    // "Your final score is:" 
+    
+
+    question.setAttribute("id", "question-div")
+  
+    
+    var text = questionArr[questionCount].text;
+     textEl.textContent=text
+
+    var a = questionArr[questionCount].a;
+    aButtonEl.textContent=a
+    var b = questionArr[questionCount].b;
+    bButtonEl.textContent=b
+    var c = questionArr[questionCount].c;
+    cButtonEl.textContent=c
+    var d = questionArr[questionCount].d;
+    dButtonEl.textContent=d
+     
+ 
+
+   questionSection.addEventListener("click", function(event){
+       console.log( event.target.textContent , questionArr[questionCount].answer)
+        if(  event.target.matches("button") && event.target.textContent === questionArr[questionCount].answer){
+            alert('Correct!'); 
+        } else {
+            alert('Wrong!');
+            timeLeft = timeLeft - 10;
+        }
+            questionCount++
+            displayNextQuestion();
+    })
+
+}
 
 // #start-quiz
-// When 'Start Quiz' button is (clicked), change .code-quiz-wrapper to first question
-function renderQuestion(){
-    const question = document.createElement('div');
-    const text = questionArr[questionCount].text;
-    const a = questionArr[questionCount].a;
-    const b = questionArr[questionCount].b;
-    const c = questionArr[questionCount].c;
-    const d = questionArr[questionCount].d;
-    question.append(text, a, b, c, d);
-    question.addEventListener("click", function(){
-        if(event.target === questionArr[questionCount].answer){
-            alert('Correct!');
-            questionCount++
-        }
-    })
-}
+startButtonEl.addEventListener("click", function() {
+        countdown();
+        // when you click 'start' hide intro section and display question section
+        questionSection.classList.remove("display"); 
+        introSection.classList.add("display");
+    displayNextQuestion();           
+});
+
+
 // When mouse hovers over button (a, b, c, d values), background of button is changed
 
 // Once a question is answered (clicked), change text to next question (text)
@@ -93,10 +150,8 @@ function renderQuestion(){
     //If answer is correct, display 'Correct!'
     // If answer is incorrect, display 'Wrong!'
 
-// Once all questions are answered, or timer runs out, display 'All done!'
-    // 'Your final score is (timeLeft).'
-    // 'Enter initials: (input)' '<button>Submit</button>
-    // This information needs to be stored?
+// 'Your final score is (timeLeft).'
+        // 'Enter initials: (input)' '<button>Submit</button>
 
 /* HIGH SCORES SECTION */
    
