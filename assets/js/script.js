@@ -1,9 +1,10 @@
 /* GLOBAL VARIABLES */
-var textEl = document.querySelector("#text");
+var textEl = document.querySelector("#question-title");
 var timerEl = document.querySelector("#timer");
 var questionsEl = document.querySelector("#questions");
-var countdownTimer
+var countdownTimer;
 var questionCount = 0;
+var answersEl = document.querySelector("#answers")
 /* GV: BUTTONS */
 var startButtonEl = document.querySelector("#start-quiz");
 var aButtonEl = document.querySelector("#a");
@@ -11,6 +12,7 @@ var bButtonEl = document.querySelector("#b");
 var cButtonEl = document.querySelector("#c");
 var dButtonEl = document.querySelector("#d");
 var submitButtonEl = document.querySelector("#submit");
+var buttonEl = document.querySelectorAll(".answers");
 /* GV: SECTIONS */
 var introSection = document.querySelector(".intro-section")
 var questionSection = document.querySelector(".question-section");
@@ -65,7 +67,6 @@ const questionArr = [
 // Starter code from: https://stackoverflow.com/questions/31106189/create-a-simple-10-second-countdown
 var timeLeft = 75;
 
-
 var countdown = function() {
     countdownTimer = setInterval(function(){
         if(timeLeft <= 0){
@@ -88,21 +89,14 @@ var countdown = function() {
 /* QUIZ SECTION */
 // display next question
 var displayNextQuestion = function() {
+    if (questionCount < questionArr.length) {
+
+    answersEl.textContent = "";
     var question = document.createElement('div');
 
-    // when user selects correct answer, 'Correct!' is displayed at the bottom of screen
-    
-    // when user selects incorrect answer, 'Wrong!' is displayed at the bottom of screen
-
-    // hide question section and display high score section
-    
-    // when all the questions are answered before time runs out, stop the clock and display 'All done!'
-    // if questions are answered incorrectly and timer runs out, display 'All done!'
-    // "Your final score is:" 
-    
-
+// #question section
     question.setAttribute("id", "question-div")
-  
+  console.log(questionCount);
     
     var text = questionArr[questionCount].text;
      textEl.textContent=text
@@ -115,22 +109,40 @@ var displayNextQuestion = function() {
     cButtonEl.textContent=c
     var d = questionArr[questionCount].d;
     dButtonEl.textContent=d
+    console.log(text);
      
- 
-
-   questionSection.addEventListener("click", function(event){
-       console.log( event.target.textContent , questionArr[questionCount].answer)
-        if(  event.target.matches("button") && event.target.textContent === questionArr[questionCount].answer){
-            alert('Correct!'); 
-        } else {
-            alert('Wrong!');
-            timeLeft = timeLeft - 10;
-        }
-            questionCount++
-            displayNextQuestion();
-    })
+    
+}
+   
 
 }
+
+for (var i=0; i < buttonEl.length; i++) {
+    buttonEl[i].addEventListener("click", function(event){
+        console.log(event.target.textContent, questionArr[questionCount].answer)
+            // when user selects correct answer, 'Correct!' is displayed at the bottom of screen 
+            if (event.target.textContent === questionArr[questionCount].answer) {
+                 answersEl.textContent='Correct!'; 
+             // when user selects incorrect answer, 'Wrong!' is displayed at the bottom of screen
+                } else {
+                 answersEl.textContent='Wrong!';
+                 timeLeft = timeLeft - 10;
+             }
+             questionCount++ // goes through questions until you reach the end
+             if (questionCount < questionArr.length) {
+                 setTimeout(displayNextQuestion, 500);
+             } else {
+                //questionSection.setAttribute("class", "question-section display");
+                //highscoreSection.setAttribute("class", "test");
+                questionSection.classList.add("display");
+                highscoreSection.classList.remove("display");
+                console.log("stop");
+                clearInterval(countdownTimer);  
+             }  
+     })
+}
+
+
 
 // #start-quiz
 startButtonEl.addEventListener("click", function() {
