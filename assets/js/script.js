@@ -4,7 +4,9 @@ var timerEl = document.querySelector("#timer");
 var questionsEl = document.querySelector("#questions");
 var countdownTimer;
 var questionCount = 0;
-var answersEl = document.querySelector("#answers")
+var answersEl = document.querySelector("#answers");
+var storeScore = [];
+var scoreResults = document.querySelector("#score-results");
 /* GV: BUTTONS */
 var startButtonEl = document.querySelector("#start-quiz");
 var aButtonEl = document.querySelector("#a");
@@ -13,10 +15,13 @@ var cButtonEl = document.querySelector("#c");
 var dButtonEl = document.querySelector("#d");
 var submitButtonEl = document.querySelector("#submit");
 var buttonEl = document.querySelectorAll(".answers");
+/*GV: INPUT */
+var initialsEl = document.querySelector("#initials");
 /* GV: SECTIONS */
 var introSection = document.querySelector(".intro-section")
 var questionSection = document.querySelector(".question-section");
 var highscoreSection = document.querySelector(".high-score-section");
+var dashboardSection = document.querySelector(".dashboard-section");
 
 /* QUESTION ARRAY: (questions provided by courses.bootcampspot.com)*/
 const questionArr = [
@@ -78,13 +83,6 @@ var countdown = function() {
         timeLeft -= 1;
       }, 1000);
 }
-// Time needs to start once the 'Start Quiz' button is pushed
-
-// For every correct answer, timer stays the same
-    // For every wrong answer, deduct 10 seconds from the timer
-
-// Stop timer once all questions are answered OR too many wrong answers are selected
-    // timeLeft is the score
 
 /* QUIZ SECTION */
 // display next question
@@ -109,14 +107,11 @@ var displayNextQuestion = function() {
     cButtonEl.textContent=c
     var d = questionArr[questionCount].d;
     dButtonEl.textContent=d
-    console.log(text);
-     
-    
+    console.log(text);   
 }
    
 
 }
-
 for (var i=0; i < buttonEl.length; i++) {
     buttonEl[i].addEventListener("click", function(event){
         console.log(event.target.textContent, questionArr[questionCount].answer)
@@ -142,7 +137,21 @@ for (var i=0; i < buttonEl.length; i++) {
      })
 }
 
+// display stored results
+var displayScore = function() {
+    var initialInput = JSON.parse(localStorage.getItem("initialInput"));
+    if (initialInput) {
+        storeScore = initialInput;
+        scoreResults.textContent = "";
+        for(i=0; i < storeScore.length; i++) {
+            var li = document.createElement("li");
+            li.textContent = storeScore[i];
+            scoreResults.appendChild(li);
+        }
+    }
+}
 
+displayScore();
 
 // #start-quiz
 startButtonEl.addEventListener("click", function() {
@@ -153,6 +162,14 @@ startButtonEl.addEventListener("click", function() {
     displayNextQuestion();           
 });
 
+// #submit score button
+submitButtonEl.addEventListener("click", function() {
+    storeScore.push(initialsEl.value + " - " + timerEl.textContent.replace("Time:", ""));
+    localStorage.setItem("initialInput", JSON.stringify(storeScore));
+    highscoreSection.classList.add("display");
+    dashboardSection.classList.remove("display");
+    displayScore();
+});
 
 // When mouse hovers over button (a, b, c, d values), background of button is changed
 
