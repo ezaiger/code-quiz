@@ -7,6 +7,7 @@ var questionCount = 0;
 var answersEl = document.querySelector("#answers");
 var storeScore = [];
 var scoreResults = document.querySelector("#score-results");
+var viewHighScore = document.querySelector(".high-score");
 /* GV: BUTTONS */
 var startButtonEl = document.querySelector("#start-quiz");
 var aButtonEl = document.querySelector("#a");
@@ -15,6 +16,7 @@ var cButtonEl = document.querySelector("#c");
 var dButtonEl = document.querySelector("#d");
 var submitButtonEl = document.querySelector("#submit");
 var buttonEl = document.querySelectorAll(".answers");
+var goBackButtonEl = document.querySelector("#go-back");
 /*GV: INPUT */
 var initialsEl = document.querySelector("#initials");
 /* GV: SECTIONS */
@@ -108,8 +110,7 @@ var displayNextQuestion = function() {
     var d = questionArr[questionCount].d;
     dButtonEl.textContent=d
     console.log(text);   
-}
-   
+} 
 
 }
 for (var i=0; i < buttonEl.length; i++) {
@@ -150,7 +151,6 @@ var displayScore = function() {
         }
     }
 }
-
 displayScore();
 
 // #start-quiz
@@ -169,6 +169,18 @@ submitButtonEl.addEventListener("click", function() {
     highscoreSection.classList.add("display");
     dashboardSection.classList.remove("display");
     displayScore();
+});
+
+// view high score link
+viewHighScore.addEventListener("click", function() {
+    introSection.classList.add("display");
+    dashboardSection.classList.remove("display");
+});
+
+// #go-back button
+goBackButtonEl.addEventListener("click", function() {
+    introSection.classList.remove("display");
+    dashboardSection.classList.add("display");
 });
 
 // When mouse hovers over button (a, b, c, d values), background of button is changed
