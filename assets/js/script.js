@@ -117,6 +117,7 @@ for (var i=0; i < buttonEl.length; i++) {
     buttonEl[i].addEventListener("click", function(event){
         console.log(event.target.textContent, questionArr[questionCount].answer)
             // when user selects correct answer, 'Correct!' is displayed at the bottom of screen 
+            // **NEED TO MAKE SURE THIS DISPLAYS ON THE LAST QUESTION**
             if (event.target.textContent === questionArr[questionCount].answer) {
                  answersEl.textContent='Correct!'; 
              // when user selects incorrect answer, 'Wrong!' is displayed at the bottom of screen
@@ -182,25 +183,6 @@ goBackButtonEl.addEventListener("click", function() {
     introSection.classList.remove("display");
     dashboardSection.classList.add("display");
 });
-
-// When mouse hovers over button (a, b, c, d values), background of button is changed
-
-// Once a question is answered (clicked), change text to next question (text)
-
-// .answer-div:
-    //If answer is correct, display 'Correct!'
-    // If answer is incorrect, display 'Wrong!'
-
-// 'Your final score is (timeLeft).'
-        // 'Enter initials: (input)' '<button>Submit</button>
-
-/* HIGH SCORES SECTION */
-   
-// Display user input with score ranging from largest to lowest (between 0-75)
-    // Example: 1. AB - 22
-    // Example: 2. JZ - 15
-
-// <button>Go Back</button> <button>Clear High Scores</button>
 
 
 
